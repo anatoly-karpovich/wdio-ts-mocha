@@ -1,0 +1,1 @@
+export const TIMEOUT_5_SECONDS = 5000

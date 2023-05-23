@@ -1,0 +1,46 @@
+{
+    "name": "wdio-test-framework",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "rimraf dist && npx tsc",
+        "prestart": "npm run build",
+        "test:ui": "npm run build && wdio run ./dist/wdio.conf.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/anatoly-karpovich/wdio-ts-mocha.git"
+    },
+    "keywords": [
+        "webdriverio",
+        "typescript",
+        "mocha"
+    ],
+    "author": "Anatoly Karpovich",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/anatoly-karpovich/wdio-ts-mocha/issues"
+    },
+    "homepage": "https://github.com/anatoly-karpovich/wdio-ts-mocha#readme",
+    "devDependencies": {
+        "@types/axios": "^0.14.0",
+        "@types/dotenv": "^8.2.0",
+        "@types/lodash": "^4.14.194",
+        "@wdio/allure-reporter": "^8.10.4",
+        "@wdio/cli": "^8.10.4",
+        "@wdio/local-runner": "^8.10.4",
+        "@wdio/mocha-framework": "^8.10.4",
+        "@wdio/selenium-standalone-service": "^8.10.4",
+        "@wdio/spec-reporter": "^8.10.4",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.0.4"
+    },
+    "dependencies": {
+        "@faker-js/faker": "^8.0.1",
+        "axios": "^1.4.0",
+        "dotenv": "^16.0.3",
+        "lodash": "^4.17.21",
+        "rimraf": "^5.0.1"
+    }
+}
