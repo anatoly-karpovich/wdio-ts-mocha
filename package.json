@@ -6,7 +6,10 @@
     "scripts": {
         "build": "rimraf dist && npx tsc",
         "prestart": "npm run build",
-        "test:ui": "npm run build && wdio run ./dist/wdio.conf.js"
+        "test": "npm run build && wdio run ./dist/wdio.conf.js",
+        "test:ui": "npm run build && wdio run ./dist/wdio.conf.js --suite ui",
+        "test:api": "npm run build && wdio run ./dist/wdio.conf.js --suite api",
+        "report": "allure generate ./allure-results --clean && allure open"
     },
     "repository": {
         "type": "git",

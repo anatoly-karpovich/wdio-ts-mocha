@@ -1,7 +1,4 @@
-import type { MaybePromise } from "../types";
-
-
-type AsyncCallback<T> = (value: T, index?: number, array?: readonly T[]) => MaybePromise<boolean>; 
+import type { AsyncCallback, MaybePromise } from "../types";
 
 /**
  * finds value in array by provided predicate
@@ -17,7 +14,7 @@ type AsyncCallback<T> = (value: T, index?: number, array?: readonly T[]) => Mayb
  * @param {Array<T>} array array or async array. Auto wait in case of async array. 
  * @param {AsyncCallback<T>} callback - find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns `true`. If such an element is found, find immediately returns that element value. Otherwise, find returns `undefined`. 
  */ 
-export default async function find<T>(array: MaybePromise<readonly T[]>, callback: AsyncCallback<T>): Promise<T | undefined> { 
+export default async function find<T>(array: MaybePromise<readonly T[]>, callback: AsyncCallback<T, boolean>): Promise<T | undefined> { 
   const awaited: readonly T[] = await array; 
   for (let index = 0; index < awaited.length; index++) { 
     const result = await callback(awaited[index], index, awaited); 

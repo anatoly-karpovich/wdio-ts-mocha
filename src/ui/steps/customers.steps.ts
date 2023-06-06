@@ -1,11 +1,28 @@
 import CustomersPage from "../pages/customers/customers.page";
 import AddNewCustomerPage from "../pages/customers/add-customer.page"
-import type { ICustomer } from "../data/customers/customers.data"
+import type { ICustomer } from "../../services/types"
+import EditCustomerPage from "../pages/customers/edit-customer.page";
+import DetailsModal from "../pages/modals/details.modal";
 
 
 class CustomerSteps {
   async openAddNewCustomerPage() {
     await CustomersPage.waitForElementAndClick(CustomersPage["Add New Customer button"])
+    await CustomersPage.waitForPage(AddNewCustomerPage.uniqueElement)
+  }
+  
+  async openEditCustomerPage(email: string) {
+    await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Edit", email));
+    await CustomersPage.waitForPage(EditCustomerPage.uniqueElement)
+  }
+  async openCustomerDetailsModal(email: string) {
+    await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Details", email));
+    await CustomersPage.waitForPage(DetailsModal.uniqueElement)
+  }
+
+  async openDeleteCustomerModal(email: string) {
+    await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Details", email));
+    await CustomersPage.waitForPage(DetailsModal.uniqueElement)
   }
 
   async fillInCustomerData(customer: ICustomer) {
