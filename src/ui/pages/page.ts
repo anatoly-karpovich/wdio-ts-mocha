@@ -21,9 +21,22 @@ export class Page {
   }
 
   async waitForPage(selector: string, reverse?: boolean, timeout?: number) {
+    const spinner = await findElement(`.spinner-border`)
+    await spinner.waitForDisplayed({ reverse: true })
     const elem = await this.waitForElementAndScroll(selector);
     if (elem) {
       await elem.waitForDisplayed({ timeout: timeout ?? TIMEOUT_5_SECONDS, reverse, timeoutMsg: `Unique element wasn't found` });
+    }
+  }
+
+  async waitForDisplayed(selector: string, reverse?: boolean, timeout?: number) {
+    let element: WebdriverIO.Element
+    if(reverse) {
+      element = await findElement(selector);
+      await element.waitForDisplayed({ timeout: timeout ?? TIMEOUT_5_SECONDS, reverse, timeoutMsg: `Unique element wasn't found` });
+    } else {
+      element = await this.waitForElementAndScroll(selector);
+      await element.waitForDisplayed({ timeout: timeout ?? TIMEOUT_5_SECONDS, timeoutMsg: `Unique element wasn't found` });
     }
   }
 
@@ -31,7 +44,9 @@ export class Page {
     const elem = await this.waitForElementAndScroll(selector);
     if (elem) {
       await elem.waitForEnabled({ timeout });
-      await elem.setValue(text);
+      text || text === 0
+      ? await elem.setValue(text)
+      : await elem.clearValue()
     }
   }
 
@@ -45,5 +60,16 @@ export class Page {
   async getElementText(selector: string, timeout = TIMEOUT_5_SECONDS) {
     const elem = await this.waitForElementAndScroll(selector);
     return await elem.getText();
+  }
+
+  async checkElementEnabled(selector: string, enabled: boolean, timeout = TIMEOUT_5_SECONDS) {
+    const elem = await this.waitForElementAndScroll(selector);
+    const actual = await elem.isEnabled();
+    expect(actual).toBe(enabled);
+  }
+
+  async checkElementText(selector: string, text: string, timeout = TIMEOUT_5_SECONDS) {
+    const actual = await this.getElementText(selector);
+    expect(actual).toBe(text);
   }
 }

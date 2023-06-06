@@ -1,0 +1,1 @@
+export type ValidationFixture = Array<{testName: string, value: string, message: string}>;

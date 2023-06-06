@@ -1,8 +1,10 @@
-import {findElement, findArrayOfElements} from "../../../utils/dom"
+import { findArrayOfElements } from "../../../utils/dom"
 import { ListPage } from "../listPage.page"
 class CustomersPage extends ListPage {
 
     uniqueElement = `//h2[text()[normalize-space()='Customers List']]`
+
+    pageName = "customers"
 
     get ['Add New Customer button']() {
         return `button.pageTitle`
@@ -10,6 +12,22 @@ class CustomersPage extends ListPage {
 
     get ['Title']() {
         return `h2.pageTitle`
+    }
+
+    get ['Email in table']() {
+        return (value: string) => `${this["Table row by unique value"](value)}/td[1]`
+    }
+
+    get ['Name in table']() {
+        return (value: string) => `${this["Table row by unique value"](value)}/td[2]`
+    }
+
+    get ['Country in table']() {
+        return (value: string) => `${this["Table row by unique value"](value)}/td[3]`
+    }
+
+    get ['Created in table']() {
+        return (value: string) => `${this["Table row by unique value"](value)}/td[4]`
     }
 
     async getTableRowByCustomerEmail(email: string) {

@@ -1,6 +1,6 @@
-import { BasePage } from "../basePage.page";
+import { Modal } from "./modal";
 
-class DeleteModal extends BasePage {
+class DeleteModal extends Modal {
   get ['Delete button']() {
     return `div.modal-footer button.btn-danger`
   }

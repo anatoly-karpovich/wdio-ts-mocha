@@ -25,6 +25,11 @@ class CommonSteps {
     const notificationText = await this.getNotificationText();
     expect(notificationText).toBe(text);
   }
+
+  async getAuthorizationToken() {
+    const token = (await browser.getCookies("Authorization"))[0].value
+    return token;
+  }
 }
 
 export default new CommonSteps();

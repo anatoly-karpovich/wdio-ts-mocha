@@ -1,7 +1,7 @@
 import { BasePage } from "../basePage.page";
 
 class AddNewCustomerPage extends BasePage {
-  uniqueElement = `//h2[.='Add New Customer']`;
+  uniqueElement = `//h2[text()[normalize-space()='Add New Customer']]`;
 
   get ['Title']() {
     return `h2.pageTitle`

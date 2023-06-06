@@ -1,4 +1,7 @@
 import type { Options } from '@wdio/types'
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 export const config: Options.Testrunner = {
     //
@@ -34,8 +37,12 @@ export const config: Options.Testrunner = {
     //
     specs: [
         // ToDo: define location for spec files here
-        "./src/ui/test/**/*.test.js"
+        "./src/**/*.test.js"
     ],
+    suites: {
+        ui: ['./src/ui/test/**/*.test.js'],
+        api: ['./src/api/test/**/*.test.js'],
+    },
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -65,6 +72,7 @@ export const config: Options.Testrunner = {
     capabilities: [{
         // capabilities for local browser web tests
         browserName: 'chrome' // or "firefox", "microsoftedge", "safari"
+        
     }],
     //
     // ===================
@@ -144,7 +152,7 @@ export const config: Options.Testrunner = {
     mochaOpts: {
         ui: 'bdd',
         timeout: 60000,
-        retries: 2,
+        retries: 0,
     },
     //
     // =====
