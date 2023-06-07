@@ -24,11 +24,6 @@ class SignInPage extends BasePage{
         await this.waitForElementAndSetValue(this.Password, password)
         await this.waitForElementAndClick(this["Login button"])
     }
-
-    async open() {
-        await browser.url('https://anatoly-karpovich.github.io/aqa-course-project/?#')
-        await browser.maximizeWindow();
-    }
 }
 
 export default new SignInPage()

@@ -50,6 +50,11 @@ export const cities: ValidationFixture = [
     message: "City's name should contain only 1-20 alphabetical characters and one space between",
   },
   {
+    testName: 'city with 0 characters',
+    value: "",
+    message: "City's name should contain only 1-20 alphabetical characters and one space between",
+  },
+  {
     testName: 'city with only spaces',
     value: "    ",
     message: "City's name should contain only 1-20 alphabetical characters and one space between",

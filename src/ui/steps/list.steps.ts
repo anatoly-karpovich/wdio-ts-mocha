@@ -9,58 +9,64 @@ import { ListPage } from "../pages/listPage.page";
 import DeleteModal from "../pages/modals/delete.modal";
 import CommonSteps from "./common.steps";
 import find from "../../utils/array/find";
+import allure from "@wdio/allure-reporter";
+import { Status } from "allure-js-commons";
+import { allureStep } from "../../utils/reporter/logStep";
 
 class ListSteps {
   /**
    * Performs search in table by unique value
    * @param {string} value Any string to be pasted into search input
    */
+  @allureStep('Search in table')
   async searchInTable(page: ListPage, value: string) {
-    await page.waitForElementAndSetValue(CustomersPage["Search input"], value);
-    await page.waitForElementAndClick(CustomersPage["Search button"]);
-    const chipSelector = page["Chip button by value"](value)
-    await page.waitForDisplayed(chipSelector);
+      await page.waitForElementAndSetValue(CustomersPage["Search input"], value);
+      await page.waitForElementAndClick(CustomersPage["Search button"]);
+      const chipSelector = page["Chip button by value"](value);
+      await page.waitForDisplayed(chipSelector);
   }
 
+  @allureStep('Click on Edit button in table for entry with unique value')
   async clickOnEditButtinByUniqueValue(uniqueValue: string) {
-    await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Edit", uniqueValue));
+      await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Edit", uniqueValue));
   }
 
+  @allureStep('Click on Details button in table for entry with unique value')
   async clickOnDetailsButtinByUniqueValue(uniqueValue: string) {
-    await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Details", uniqueValue));
+      await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Details", uniqueValue));
   }
 
+  @allureStep('Click on Delete button in table for entry with unique value')
   async clickOnDeleteButtinByUniqueValue(uniqueValue: string) {
-    await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Delete", uniqueValue));
+      await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Delete", uniqueValue));
   }
 
+  @allureStep('Delete entry with unique value')
   async deleteEntryByUniqueValue(uniqueValue: string) {
-    await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Delete", uniqueValue));
-    await DeleteModal.waitForElementAndClick(DeleteModal["Delete button"]);
+      await CustomersPage.waitForElementAndClick(CustomersPage.getButtonSelectorByUniqueValue("Delete", uniqueValue));
+      await DeleteModal.waitForElementAndClick(DeleteModal["Delete button"]);
   }
 
-  async checkChipButtonByText(text: string) {
-    await CustomersPage.checkElementText(CustomersPage["Chip button by value"](text), text);
-  }
-
+  @allureStep('Get search chip button text')
   async getSearchChipButtonText(page: ListPage) {
-    const chips = await findArrayOfElements(CustomersPage["Chip buttons"]);
-    const chip = await find(chips, async (chip) => await chip.getAttribute(`data-chip-${page.pageName}`) === 'search')
-    const text = await chip.getText();
-    return text
+      const chips = await findArrayOfElements(CustomersPage["Chip buttons"]);
+      const chip = await find(chips, async (chip) => (await chip.getAttribute(`data-chip-${page.pageName}`)) === "search");
+      const text = await chip.getText();
+      return text;
   }
 
+  @allureStep('Compare actual table data and received from API')
   async verifyTableData(page: ListPage) {
-    let expected = await this.getApiDataMappedToTableHeaders(page);
-    const chipsData = await this.getChipButtons(page);
-    if (chipsData) {
-      expected = this.filterAndSearchInTableData(expected, chipsData);
-    }
-    const actual = await CustomersPage.getListOfEntitiesFromTable();
-    expect(actual.length).toBe(expected.length);
-    for(const obj of expected) {
-      expect(actual).toContainEqual(obj);
-    }
+      let expected = await this.getApiDataMappedToTableHeaders(page);
+      const chipsData = await this.getChipButtons(page);
+      if (chipsData) {
+        expected = this.filterAndSearchInTableData(expected, chipsData);
+      }
+      const actual = await CustomersPage.getListOfEntitiesFromTable();
+      expect(actual.length).toBe(expected.length);
+      for (const obj of expected) {
+        expect(actual).toContainEqual(obj);
+      }
   }
 
   private async getApiDataMappedToTableHeaders(page: ListPage): Promise<Record<string, string>[]> {

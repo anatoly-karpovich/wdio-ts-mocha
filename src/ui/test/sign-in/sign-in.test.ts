@@ -1,13 +1,14 @@
 import SignInPage from "../../pages/sign-in.page";
+import SignInSteps from "../../steps/sign-in.steps";
 import HomePage from "../../pages/home.page";
 import { findElement } from "../../../utils/dom";
 import CommonSteps from "../../steps/common.steps";
 
-//To run this suite: npx wdio dist/wdio.conf.js --spec dist/src/ui/test/sign-in/sign-in.test.js
+//To run this suite: npm run build && npx wdio dist/wdio.conf.js --spec dist/src/ui/test/sign-in/sign-in.test.js
 
-describe("Sign-in tests", function () {
+describe("[Sign-in] sign in", function () {
   before(async function () {
-    await SignInPage.open();
+    await SignInSteps.openSalesPortal();
     await CommonSteps.waitForPageIsLoaded();
   });
   
