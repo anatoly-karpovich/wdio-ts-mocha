@@ -10,13 +10,13 @@ import { cities } from "../../../../../fixtures/customers/validations";
 
 //To run this suite: npx wdio dist/wdio.conf.js --spec dist/src/ui/test/customers/add-new-customer/validations/city-validations.test.js
 
-describe('Customer city validations', function() {
+describe('[Customers] [Add New Customer] city validations', function() {
   let customer: ICustomer;
   let token: string;
 
   beforeEach(async function() {
     customer = generateNewCustomer();
-    await SignInPage.open();
+    await SignInSteps.openSalesPortal();
     await CommonSteps.waitForPageIsLoaded();
     await SignInSteps.signIn();
     await CommonSteps.waitForPageIsLoaded();
@@ -28,13 +28,12 @@ describe('Customer city validations', function() {
   });
 
   for(const city of cities) {
-    it(`Should see error for ${city.testName}`, async function() {
+    it(`Should see error message for city with name ${city.testName}`, async function() {
       await HomeSteps.openCustomersPage();
       await CustomersSteps.openAddNewCustomerPage();
       await CustomersSteps.fillInCustomerData(customer)
-      await AddNewCustomerPage.waitForElementAndSetValue(AddNewCustomerPage["City input"], city.value)
-      await AddNewCustomerPage.checkElementText(AddNewCustomerPage["City Error"], city.message)
-      await AddNewCustomerPage.checkElementEnabled(AddNewCustomerPage["Save New Customer button"], false)
+      await AddNewCustomerPage.waitForElementAndSetValue(AddNewCustomerPage["City input"], city.value);
+      await CustomersSteps.verifyError(AddNewCustomerPage["City Error"], city.message)
     })
   }
   

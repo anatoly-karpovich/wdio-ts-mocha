@@ -1,4 +1,3 @@
-import SignInPage from "../../pages/sign-in.page";
 import CommonSteps from "../../steps/common.steps";
 import SignInSteps from "../../steps/sign-in.steps";
 import CustomerSteps from "../../steps/customers.steps";
@@ -12,15 +11,15 @@ import EditCustomerPage from "../../pages/customers/edit-customer.page";
 import ListSteps from "../../steps/list.steps";
 import DetailsSteps from "../../steps/details.steps";
 
-//To run this suite: npx wdio dist/wdio.conf.js --spec dist/src/ui/test/customers/smoke.test.js
+//To run this suite: npm run build && npx wdio dist/wdio.conf.js --spec dist/src/ui/test/customers/smoke.test.js
 
 let customer: ICustomer;
 let token: string;
 
-describe("Customer CRUD smoke tests", function () {
+describe("[Customers] Customer CRUD smoke tests", function () {
   beforeEach(async function () {
     customer = generateNewCustomer();
-    await SignInPage.open();
+    await SignInSteps.openSalesPortal();
     await CommonSteps.waitForPageIsLoaded();
     await SignInSteps.signIn();
     await CommonSteps.waitForPageIsLoaded();

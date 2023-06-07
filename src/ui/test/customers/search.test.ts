@@ -15,10 +15,10 @@ let customer: ICustomer;
 let token: string;
 let response: AxiosResponse;
 
-describe("Customer list search tests", function () {
+describe("[Customers] Customer list search tests", function () {
   beforeEach(async function () {
     customer = generateNewCustomer();
-    await SignInPage.open();
+    await SignInSteps.openSalesPortal();
     await CommonSteps.waitForPageIsLoaded();
     await SignInSteps.signIn();
     await CommonSteps.waitForPageIsLoaded();
